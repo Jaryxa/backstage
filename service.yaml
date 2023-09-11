@@ -1,0 +1,92 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: rest-api-service-utils
+spec:
+  type: service
+  lifecycle: production
+  owner: equipo-de-desarrollo
+  providesApis:
+    - api: rest-api-service-utils-api
+      owner: equipo-de-desarrollo
+      definition:
+        type: openapi
+        target: http://localhost:8080/service-utils/swagger.yaml
+        paths:
+          /v1/getuf:
+            get:
+              description: Obtiene fecha y valor UF
+              tags:
+                - UF
+              operationId: getUf
+              parameters:
+                - name: date
+                  in: query
+                  description: fecha valor UF
+                  required: false
+                  example: 04/09/2023
+                  schema:
+                    type: string
+              responses:
+                '200':
+                  description: Successful operation
+                  content:
+                    '*/*':
+                      schema:
+                        $ref: '#/components/schemas/ResultUF'
+          /v1/moneda:
+            get:
+              description: Obtiene fecha y valor UF
+              tags:
+                - UF
+              operationId: getmoneda
+              parameters:
+                - name: date
+                  in: query
+                  description: fecha valor UF
+                  required: false
+                  example: 04/09/2023
+                  schema:
+                    type: string
+                - name: codigomoneda
+                  in: query
+                  required: false
+                  schema:
+                    type: integer
+                    enum: [5, 3]
+                  description: |
+                    Sort order:
+                    - `5` - US$
+                    - `8` - UTM
+              responses:
+                '200':
+                  description: Successful operation
+                  content:
+                    '*/*':
+                      schema:
+                        $ref: '#/components/schemas/ResultMoneda'
+
+apiVersion: backstage.io/v1alpha1
+kind: ApiSpec
+metadata:
+  name: rest-api-service-utils-schemas
+  description: Esquemas de respuesta de la API
+  owner: equipo-de-desarrollo
+spec:
+  type: openapi
+  target: http://localhost:8080/service-utils/swagger.yaml
+  content:
+    application/json:
+      $ref: '#/components/schemas/ResultUF'
+      $ref: '#/components/schemas/ResultMoneda'
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: DocsBuilder
+metadata:
+  name: rest-api-service-utils-schemas-docs
+  owner: equipo-de-desarrollo
+spec:
+  type: openapi
+  target: http://localhost:8080/service-utils/swagger.yaml
+  outputDir: /docs/schemas
