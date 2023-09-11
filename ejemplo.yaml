@@ -1,1 +1,46 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: servicio-get-1
+spec:
+  type: service
+  lifecycle: production
+  owner: equipo-de-desarrollo
+  providesApis:
+    - api: servicio-get-1-api
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: servicio-get-2
+spec:
+  type: service
+  lifecycle: production
+  owner: equipo-de-desarrollo
+  providesApis:
+    - api: servicio-get-2-api
+---
+apiVersion: backstage.io/v1alpha1
+kind: Api
+metadata:
+  name: servicio-get-1-api
+spec:
+  type: openapi
+  lifecycle: production
+  owner: equipo-de-desarrollo
+  definition:
+    type: url
+    target: https://api-ejemplo.com/api/recurso-1/swagger.json
+---
+apiVersion: backstage.io/v1alpha1
+kind: Api
+metadata:
+  name: servicio-get-2-api
+spec:
+  type: openapi
+  lifecycle: production
+  owner: equipo-de-desarrollo
+  definition:
+    type: url
+    target: https://api-ejemplo.com/api/recurso-2/swagger.json
 
