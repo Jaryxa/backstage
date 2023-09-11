@@ -12,82 +12,59 @@ spec:
       definition:
         type: openapi
         target: http://localhost:8080/service-utils/swagger.yaml
-
----
-
-apiVersion: backstage.io/v1alpha1
-kind: ApiSpec
-metadata:
-  name: rest-api-service-utils-api
-  description: API de servicio REST
-  owner: equipo-de-desarrollo
-spec:
-  type: openapi
-  info:
-    title: REST API SERVICE UTILS
-    description: REST API Para utilidades Zurich
-    version: '1.0'
-  servers:
-    - url: http://localhost:8080/service-utils
-      description: server URL local
-  tags:
-    - name: UF
-      description: Servicios UF
-  paths:
-    /v1/getuf:
-      get:
-        description: Obtiene fecha y valor UF
-        tags:
-          - UF
-        operationId: getUf
-        parameters:
-          - name: date
-            in: query
-            description: fecha valor UF
-            required: false
-            example: 04/09/2023
-            schema:
-              type: string
-        responses:
-          '200':
-            description: Successful operation
-            content:
-              '*/*':
-                schema:
-                  $ref: '#/components/schemas/ResultUF'
-    /v1/moneda:
-      get:
-        description: Obtiene fecha y valor UF
-        tags:
-          - UF
-        operationId: getmoneda
-        parameters:
-          - name: date
-            in: query
-            description: fecha valor UF
-            required: false
-            example: 04/09/2023
-            schema:
-              type: string
-          - name: codigomoneda
-            in: query
-            required: false
-            schema:
-              type: integer
-              enum: [5, 3]
-            description: >
-              Sort order:
-                - `5` - US$
-                - `8` - UTM
-        responses:
-          '200':
-            description: Successful operation
-            content:
-              '*/*':
-                schema:
-                  $ref: '#/components/schemas/ResultMoneda'
-
----
+        paths:
+          /v1/getuf:
+            get:
+              description: Obtiene fecha y valor UF
+              tags:
+                - UF
+              operationId: getUf
+              parameters:
+                - name: date
+                  in: query
+                  description: fecha valor UF
+                  required: false
+                  example: 04/09/2023
+                  schema:
+                    type: string
+              responses:
+                '200':
+                  description: Successful operation
+                  content:
+                    '*/*':
+                      schema:
+                        $ref: '#/components/schemas/ResultUF'
+          /v1/moneda:
+            get:
+              description: Obtiene fecha y valor UF
+              tags:
+                - UF
+              operationId: getmoneda
+              parameters:
+                - name: date
+                  in: query
+                  description: fecha valor UF
+                  required: false
+                  example: 04/09/2023
+                  schema:
+                    type: string
+                - name: codigomoneda
+                  in: query
+                  required: false
+                  schema:
+                    type: integer
+                    enum: [5, 3]
+                  description: |
+                    Sort order:
+                    - `5` - US$
+                    - `8` - UTM
+              responses:
+                '200':
+                  description: Successful operation
+                  content:
+                    '*/*':
+                      schema:
+                        $ref: '#/components/schemas/ResultMoneda'
 
 apiVersion: backstage.io/v1alpha1
 kind: ApiSpec
@@ -97,16 +74,13 @@ metadata:
   owner: equipo-de-desarrollo
 spec:
   type: openapi
-  info:
-    title: REST API SERVICE UTILS Schemas
+  target: http://localhost:8080/service-utils/swagger.yaml
   content:
     application/json:
       $ref: '#/components/schemas/ResultUF'
-    application/xml:
       $ref: '#/components/schemas/ResultMoneda'
 
 ---
-
 apiVersion: backstage.io/v1alpha1
 kind: DocsBuilder
 metadata:
